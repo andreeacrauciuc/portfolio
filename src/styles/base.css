@@ -10,9 +10,9 @@ html {
 
 body {
   margin: 0;
-  background: #eeebe4;
-  color: #14130f;
-  font-family: "Inter", sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
@@ -38,6 +38,15 @@ p {
 }
 
 :focus-visible {
-  outline: 2px solid #ff4b1f;
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

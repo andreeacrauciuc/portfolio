@@ -6,7 +6,12 @@ import {
   type MouseEvent,
   type ReactNode,
 } from "react";
-import { PROFILE, NAV, FACTS, JOURNEY, WORK, SKILLS, MARQUEE } from "@/data/content";
+import { facts } from "@/data/facts";
+import { journey } from "@/data/journey";
+import { navItems } from "@/data/nav";
+import { profile } from "@/data/profile";
+import { projects } from "@/data/projects";
+import { marqueeItems, skills } from "@/data/skills";
 
 const INK = "#14130F",
   PAPER = "#EEEBE4",
@@ -71,8 +76,8 @@ function Label({ num, text }: { num: string; text: string }) {
 }
 
 export function App() {
-  const { name, role, tagline, about, email, linkedin, github, cvUrl, photoUrl } =
-    PROFILE;
+  const { name, role, tagline, about, email, linkedinUrl, githubUrl, cvUrl, photoUrl } =
+    profile;
 
   const tlRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -95,7 +100,7 @@ export function App() {
       setSt(top);
       setTotal(Math.max(1, document.documentElement.scrollHeight - window.innerHeight));
       let cur = "home";
-      NAV.forEach(([id]) => {
+      navItems.forEach(({ id }) => {
         const s = document.getElementById(id);
         if (s && s.getBoundingClientRect().top + top - 160 <= top) cur = id;
       });
@@ -160,10 +165,6 @@ export function App() {
       }}
     >
       <style>{`
-        @keyframes rise { from { opacity:0; transform: translateY(60px); filter: blur(10px) } to { opacity:1; transform:none; filter:none } }
-        @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
-        @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,75,31,.5) } 50% { box-shadow: 0 0 0 9px rgba(255,75,31,0) } }
-        @keyframes drift { 0%,100% { transform: translate(0,0) } 50% { transform: translate(30px,-20px) } }
         .h1 { animation: rise 1.2s .15s both cubic-bezier(.2,.8,.2,1) }
         .h2 { animation: rise 1.2s .35s both cubic-bezier(.2,.8,.2,1) }
         .h3 { animation: rise 1.2s .55s both cubic-bezier(.2,.8,.2,1) }
@@ -176,7 +177,6 @@ export function App() {
         .ulink { background: linear-gradient(${ACC},${ACC}) 0 100% / 0 2px no-repeat; transition: background-size .4s; }
         .ulink:hover { background-size: 100% 2px; }
         @media (prefers-reduced-motion: reduce) {
-          * { animation: none !important; transition: none !important; }
           .h1, .h2, .h3 { opacity: 1 !important; }
         }
       `}</style>
@@ -298,7 +298,7 @@ export function App() {
           </button>
           {!mobile && (
             <div style={{ display: "flex", gap: 2 }}>
-              {NAV.map(([id, label]) => (
+              {navItems.map(({ id, label }) => (
                 <button
                   key={id}
                   className="pill"
@@ -362,7 +362,7 @@ export function App() {
                 flexDirection: "column",
               }}
             >
-              {NAV.map(([id, label]) => (
+              {navItems.map(({ id, label }) => (
                 <button
                   key={id}
                   className="pill"
@@ -590,7 +590,7 @@ export function App() {
               animation: "marquee 28s linear infinite",
             }}
           >
-            {[...MARQUEE, ...MARQUEE].map((m, i) => (
+            {[...marqueeItems, ...marqueeItems].map((m, i) => (
               <span
                 key={i}
                 style={{
@@ -633,8 +633,8 @@ export function App() {
               <p style={{ fontSize: 19, lineHeight: 1.8, opacity: 0.75 }}>{about}</p>
             </Reveal>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-              {FACTS.map(([n, l], i) => (
-                <Reveal key={l} delay={i * 0.08}>
+              {facts.map(({ value, label }, i) => (
+                <Reveal key={label} delay={i * 0.08}>
                   <div
                     className="lift"
                     style={{
@@ -645,10 +645,10 @@ export function App() {
                     }}
                   >
                     <div style={{ ...serif, fontSize: 52, lineHeight: 1, color: ACC }}>
-                      {n}
+                      {value}
                     </div>
                     <div style={{ ...mono, fontSize: 11, marginTop: 10, opacity: 0.6 }}>
-                      {l}
+                      {label}
                     </div>
                   </div>
                 </Reveal>
@@ -687,11 +687,11 @@ export function App() {
                 boxShadow: "0 0 14px rgba(255,75,31,.6)",
               }}
             />
-            {JOURNEY.map(([y, t, p, d], i) => {
+            {journey.map(({ id, period, title, place, description }, i) => {
               const on = i <= lit;
               return (
                 <div
-                  key={t}
+                  key={id}
                   ref={(el) => {
                     itemRefs.current[i] = el;
                   }}
@@ -715,7 +715,7 @@ export function App() {
                         color: on ? ACC : INK,
                       }}
                     >
-                      {y}
+                      {period}
                     </div>
                   )}
                   <div
@@ -742,9 +742,9 @@ export function App() {
                     }}
                   >
                     {mobile && (
-                      <div style={{ ...mono, color: ACC, marginBottom: 8 }}>{y}</div>
+                      <div style={{ ...mono, color: ACC, marginBottom: 8 }}>{period}</div>
                     )}
-                    <div style={{ ...serif, fontSize: 30, lineHeight: 1.1 }}>{t}</div>
+                    <div style={{ ...serif, fontSize: 30, lineHeight: 1.1 }}>{title}</div>
                     <div
                       style={{
                         ...mono,
@@ -753,9 +753,9 @@ export function App() {
                         opacity: 0.6,
                       }}
                     >
-                      {p}
+                      {place}
                     </div>
-                    <div style={{ lineHeight: 1.65, opacity: 0.75 }}>{d}</div>
+                    <div style={{ lineHeight: 1.65, opacity: 0.75 }}>{description}</div>
                   </div>
                 </div>
               );
@@ -774,8 +774,8 @@ export function App() {
           <div
             style={{ display: "flex", flexDirection: "column", gap: 24, marginTop: 56 }}
           >
-            {WORK.map((p, i) => (
-              <Reveal key={p.title} delay={i * 0.08}>
+            {projects.map((p, i) => (
+              <Reveal key={p.id} delay={i * 0.08}>
                 <article
                   className="lift"
                   style={{ ...glass, borderRadius: 32, padding: mobile ? 24 : 40 }}
@@ -798,7 +798,7 @@ export function App() {
                           verticalAlign: "middle",
                         }}
                       >
-                        {p.n}
+                        {p.number}
                       </span>
                       {p.title}
                     </div>
@@ -845,10 +845,10 @@ export function App() {
                   <div
                     style={{ display: "flex", gap: 12, marginTop: 30, flexWrap: "wrap" }}
                   >
-                    {p.live && (
+                    {p.liveUrl && (
                       <a
                         className="pill solid"
-                        href={p.live}
+                        href={p.liveUrl}
                         target="_blank"
                         rel="noreferrer"
                         style={{
@@ -863,7 +863,7 @@ export function App() {
                     )}
                     <a
                       className="pill"
-                      href={p.code}
+                      href={p.codeUrl}
                       target="_blank"
                       rel="noreferrer"
                       style={{
@@ -899,14 +899,14 @@ export function App() {
               marginTop: 50,
             }}
           >
-            {SKILLS.map(([k, v], i) => (
-              <Reveal key={k} delay={i * 0.08}>
+            {skills.map(({ category, items }, i) => (
+              <Reveal key={category} delay={i * 0.08}>
                 <div
                   className="lift"
                   style={{ ...glass, borderRadius: 26, padding: 30, height: "100%" }}
                 >
-                  <div style={{ ...mono, color: ACC, marginBottom: 12 }}>{k}</div>
-                  <div style={{ ...serif, fontSize: 28, lineHeight: 1.25 }}>{v}</div>
+                  <div style={{ ...mono, color: ACC, marginBottom: 12 }}>{category}</div>
+                  <div style={{ ...serif, fontSize: 28, lineHeight: 1.25 }}>{items}</div>
                 </div>
               </Reveal>
             ))}
@@ -955,7 +955,7 @@ export function App() {
             >
               <a
                 className="pill solid"
-                href={linkedin}
+                href={linkedinUrl}
                 target="_blank"
                 rel="noreferrer"
                 style={{ padding: "14px 28px", borderRadius: 999, fontWeight: 600 }}
@@ -964,7 +964,7 @@ export function App() {
               </a>
               <a
                 className="pill"
-                href={github}
+                href={githubUrl}
                 target="_blank"
                 rel="noreferrer"
                 style={{
