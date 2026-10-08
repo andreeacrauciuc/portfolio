@@ -1,3 +1,15 @@
+@use "tokens" as t;
+@use "mixins" as m;
+
+:root {
+  @include t.custom-properties;
+
+  @include m.desktop {
+    --section-padding-block: #{t.$section-padding-block-desktop};
+    --section-padding-inline: #{t.$section-padding-inline-desktop};
+  }
+}
+
 *,
 *::before,
 *::after {
@@ -10,9 +22,9 @@ html {
 
 body {
   margin: 0;
-  background: var(--color-paper);
-  color: var(--color-ink);
-  font-family: var(--font-sans);
+  background: t.$color-paper;
+  color: t.$color-ink;
+  font-family: t.$font-sans;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
@@ -38,11 +50,10 @@ p {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 3px;
+  @include m.focus-ring;
 }
 
-@media (prefers-reduced-motion: reduce) {
+@include m.reduced-motion {
   *,
   *::before,
   *::after {

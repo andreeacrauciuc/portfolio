@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import { useInView } from "@/hooks/useInView";
 import { cn } from "@/lib/cn";
 import type { Technology } from "@/types/content";
-import styles from "./Marquee.module.css";
+import styles from "./Marquee.module.scss";
 
 interface MarqueeProps {
   items: readonly Technology[];

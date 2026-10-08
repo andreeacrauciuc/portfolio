@@ -1,0 +1,151 @@
+@use "tokens" as t;
+@use "mixins" as m;
+@use "animations" as a;
+
+@include a.marquee;
+@include a.bob;
+
+.marquee {
+  // Mobile first; desktop values are set in the breakpoint below.
+  --logo-size: 44px;
+  --logo-gap: 72px;
+  --logo-bleed: 20px;
+  --row-height: calc(var(--logo-size) + 2 * var(--logo-bleed));
+  --glow-spread: 14px;
+  --bob-distance: -5px;
+  --bob-duration: 4s;
+  --bob-stagger: -0.7s;
+  --enter-stagger: 70ms;
+  --enter-offset: 24px;
+  // One list is 10 logos wide; the duration keeps the scroll speed at ~59px/s.
+  --loop-duration: 20s;
+
+  overflow: hidden;
+  border-top: 1px solid t.$color-ink-hairline;
+  border-bottom: 1px solid t.$color-ink-hairline;
+
+  @include m.desktop {
+    --logo-size: 60px;
+    --logo-gap: 120px;
+    --loop-duration: 31s;
+  }
+
+  // Reduced motion: a static, wrapped row so no logo is cut off or hidden.
+  @include m.reduced-motion {
+    --logo-gap: 32px;
+    --logo-bleed: 8px;
+  }
+}
+
+.track {
+  display: flex;
+  width: max-content;
+
+  @include m.motion-safe {
+    animation: marquee var(--loop-duration) linear infinite;
+  }
+
+  @include m.reduced-motion {
+    width: auto;
+    justify-content: center;
+  }
+}
+
+.list {
+  display: flex;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include m.reduced-motion {
+    flex-shrink: 1;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+.duplicate {
+  @include m.reduced-motion {
+    display: none;
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  height: var(--row-height);
+  padding: 0 calc(var(--logo-gap) / 2);
+  color: var(--logo-color, #{t.$color-ink});
+
+  @include m.motion-safe {
+    opacity: 0;
+    transform: translateY(var(--enter-offset));
+    transition:
+      opacity t.$duration-reveal t.$ease-out,
+      transform t.$duration-reveal t.$ease-out;
+    transition-delay: calc(var(--index) * var(--enter-stagger));
+  }
+}
+
+.visible .item {
+  @include m.motion-safe {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.bob {
+  position: relative;
+  display: block;
+  width: var(--logo-size);
+  height: var(--logo-size);
+
+  @include m.motion-safe {
+    animation: bob var(--bob-duration) ease-in-out infinite;
+    animation-delay: calc(var(--index) * var(--bob-stagger));
+  }
+
+  // Soft glow in the logo's own colour, revealed by opacity only.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: calc(var(--glow-spread) * -1);
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, currentcolor 45%, transparent),
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity t.$duration-base t.$ease-out;
+  }
+
+  &:hover::before,
+  &:focus-within::before {
+    opacity: 1;
+  }
+
+  &:hover .logo,
+  &:focus-within .logo {
+    transform: translateY(-6px) scale(1.15);
+  }
+}
+
+// The whole strip stands still while hovered, so the logo under the pointer is easy to read.
+.marquee:hover {
+  @include m.motion-safe-hover {
+    .track,
+    .bob {
+      animation-play-state: paused;
+    }
+  }
+}
+
+.logo {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform t.$duration-quick t.$ease-out;
+}

@@ -1,0 +1,71 @@
+// Every @keyframes lives here. CSS Modules scope keyframe names to the module,
+// so each keyframe is a mixin: include it in the module that uses it. The
+// global entry (main.scss) includes the ones still used outside modules.
+@use "tokens" as t;
+
+@mixin rise {
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(60px);
+      filter: blur(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+  }
+}
+
+@mixin marquee {
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+@mixin pulse {
+  @keyframes pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 t.$color-accent-pulse;
+    }
+
+    50% {
+      box-shadow: 0 0 0 9px t.$color-accent-pulse-end;
+    }
+  }
+}
+
+@mixin drift {
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+
+    50% {
+      transform: translate(30px, -20px);
+    }
+  }
+}
+
+@mixin bob {
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(var(--bob-distance));
+    }
+  }
+}

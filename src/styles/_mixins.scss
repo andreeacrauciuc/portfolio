@@ -1,0 +1,64 @@
+// Reusable style recipes. Emits no CSS until a module includes a mixin.
+@use "tokens" as t;
+
+@mixin desktop {
+  @media (min-width: t.$breakpoint-desktop) {
+    @content;
+  }
+}
+
+// Styles for users who asked for less motion.
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// Styles that only apply when motion is welcome.
+@mixin motion-safe {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+}
+
+// Motion that reacts to a real pointer (not sticky touch hover) and is welcome.
+@mixin motion-safe-hover {
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) {
+    @content;
+  }
+}
+
+@mixin glass-surface {
+  background: t.$glass-background;
+  backdrop-filter: t.$glass-filter;
+  -webkit-backdrop-filter: t.$glass-filter;
+  border: t.$glass-border;
+  box-shadow: t.$glass-shadow;
+}
+
+@mixin mono-label {
+  font-family: t.$font-mono;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+@mixin serif-heading {
+  font-family: t.$font-serif;
+  font-weight: 400;
+}
+
+@mixin pill {
+  display: inline-block;
+  border-radius: t.$radius-pill;
+  cursor: pointer;
+  transition:
+    background-color t.$duration-quick,
+    color t.$duration-quick,
+    transform t.$duration-quick;
+}
+
+@mixin focus-ring {
+  outline: 2px solid t.$color-accent;
+  outline-offset: 3px;
+}

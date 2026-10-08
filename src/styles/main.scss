@@ -1,0 +1,13 @@
+// Global entry point. Components `@use "tokens"` / `@use "mixins"` directly;
+// only this file emits the global CSS (base styles and shared keyframes).
+@forward "tokens";
+@forward "mixins";
+@forward "animations";
+
+@use "animations";
+@use "base";
+
+// Shared keyframes still referenced by name from outside CSS Modules.
+@include animations.rise;
+@include animations.pulse;
+@include animations.drift;
