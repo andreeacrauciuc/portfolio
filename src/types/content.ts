@@ -1,3 +1,5 @@
+import type { IconType } from "react-icons";
+
 export type SectionId = "home" | "about" | "journey" | "work" | "skills" | "contact";
 
 export interface Profile {
@@ -46,4 +48,11 @@ export interface Project {
 export interface SkillGroup {
   category: string;
   items: string;
+}
+
+export interface Technology {
+  name: string;
+  icon: IconType;
+  /** Brand colour of the logo. Omit for icons without a brand (falls back to ink). */
+  color?: string;
 }

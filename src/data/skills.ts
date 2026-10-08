@@ -9,16 +9,3 @@ export const skills: readonly SkillGroup[] = [
     items: "Project management · Business analysis · Cybersecurity basics",
   },
 ];
-
-export const marqueeItems: readonly string[] = [
-  "React",
-  "Java",
-  "C#",
-  ".NET",
-  "PostgreSQL",
-  "JavaScript",
-  "Git",
-  "Jira",
-  "Figma",
-  "Cybersecurity",
-];

@@ -6,12 +6,15 @@ import {
   type MouseEvent,
   type ReactNode,
 } from "react";
+import { Marquee } from "@/components/ui/Marquee/Marquee";
+import { useInView } from "@/hooks/useInView";
 import { facts } from "@/data/facts";
 import { journey } from "@/data/journey";
 import { navItems } from "@/data/nav";
 import { profile } from "@/data/profile";
 import { projects } from "@/data/projects";
-import { marqueeItems, skills } from "@/data/skills";
+import { skills } from "@/data/skills";
+import { technologies } from "@/data/technologies";
 
 const INK = "#14130F",
   PAPER = "#EEEBE4",
@@ -33,32 +36,14 @@ const mono: CSSProperties = {
 const serif: CSSProperties = { fontFamily: "Instrument Serif, serif", fontWeight: 400 };
 
 function Reveal({ children, delay = 0 }: { children: ReactNode; delay?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setShow(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.12 },
-    );
-    io.observe(el);
-    return () => {
-      io.disconnect();
-    };
-  }, []);
+  const { ref, isInView } = useInView<HTMLDivElement>();
   return (
     <div
       ref={ref}
       style={{
-        opacity: show ? 1 : 0,
-        transform: show ? "none" : "translateY(36px)",
-        filter: show ? "none" : "blur(6px)",
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "none" : "translateY(36px)",
+        filter: isInView ? "none" : "blur(6px)",
         transition: `all 1s ${String(delay)}s cubic-bezier(.2,.8,.2,1)`,
       }}
     >
@@ -573,38 +558,7 @@ export function App() {
           </div>
         </section>
 
-        {/* MARQUEE */}
-        <div
-          aria-hidden="true"
-          style={{
-            overflow: "hidden",
-            borderTop: "1px solid rgba(20,19,15,.12)",
-            borderBottom: "1px solid rgba(20,19,15,.12)",
-            padding: "20px 0",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              width: "max-content",
-              animation: "marquee 28s linear infinite",
-            }}
-          >
-            {[...marqueeItems, ...marqueeItems].map((m, i) => (
-              <span
-                key={i}
-                style={{
-                  ...serif,
-                  fontSize: 34,
-                  padding: "0 28px",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {m} <span style={{ color: ACC }}>✦</span>
-              </span>
-            ))}
-          </div>
-        </div>
+        <Marquee items={technologies} label="Technologies I work with" />
 
         {/* ABOUT */}
         <section id="about" style={{ padding: pad }}>

@@ -1,0 +1,165 @@
+/* Mobile first; the desktop breakpoint (760px) matches tokens.css. */
+.marquee {
+  --logo-size: 44px;
+  --logo-gap: 72px;
+  --logo-bleed: 20px;
+  --row-height: calc(var(--logo-size) + 2 * var(--logo-bleed));
+  --glow-spread: 14px;
+  --bob-distance: -5px;
+  --bob-duration: 4s;
+  --bob-stagger: -0.7s;
+  --enter-stagger: 70ms;
+  --enter-offset: 24px;
+  /* One list is 10 logos wide; the duration keeps the scroll speed at ~59px/s. */
+  --loop-duration: 20s;
+
+  overflow: hidden;
+  border-top: 1px solid var(--color-ink-hairline);
+  border-bottom: 1px solid var(--color-ink-hairline);
+}
+
+@media (min-width: 760px) {
+  .marquee {
+    --logo-size: 60px;
+    --logo-gap: 120px;
+    --loop-duration: 31s;
+  }
+}
+
+.track {
+  display: flex;
+  width: max-content;
+}
+
+.list {
+  display: flex;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  height: var(--row-height);
+  padding: 0 calc(var(--logo-gap) / 2);
+  color: var(--logo-color, var(--color-ink));
+}
+
+.bob {
+  position: relative;
+  display: block;
+  width: var(--logo-size);
+  height: var(--logo-size);
+}
+
+/* Soft glow in the logo's own colour, revealed by opacity only. */
+.bob::before {
+  content: "";
+  position: absolute;
+  inset: calc(var(--glow-spread) * -1);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, currentColor 45%, transparent),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+
+.logo {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform var(--duration-quick) var(--ease-out);
+}
+
+.bob:hover::before,
+.bob:focus-within::before {
+  opacity: 1;
+}
+
+.bob:hover .logo,
+.bob:focus-within .logo {
+  transform: translateY(-6px) scale(1.15);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .track {
+    animation: marquee var(--loop-duration) linear infinite;
+  }
+
+  .item {
+    opacity: 0;
+    transform: translateY(var(--enter-offset));
+    transition:
+      opacity var(--duration-reveal) var(--ease-out),
+      transform var(--duration-reveal) var(--ease-out);
+    transition-delay: calc(var(--index) * var(--enter-stagger));
+  }
+
+  .visible .item {
+    opacity: 1;
+    transform: none;
+  }
+
+  .bob {
+    animation: bob var(--bob-duration) ease-in-out infinite;
+    animation-delay: calc(var(--index) * var(--bob-stagger));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) {
+  .marquee:hover .track,
+  .marquee:hover .bob {
+    animation-play-state: paused;
+  }
+}
+
+/* Reduced motion: a static, wrapped row so no logo is cut off or hidden. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    --logo-gap: 32px;
+    --logo-bleed: 8px;
+  }
+
+  .track {
+    width: auto;
+    justify-content: center;
+  }
+
+  .list {
+    flex-shrink: 1;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .duplicate {
+    display: none;
+  }
+}
+
+/* Keyframes are local: CSS Modules scope keyframe names to the module. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(var(--bob-distance));
+  }
+}
