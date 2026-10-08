@@ -10,7 +10,7 @@ export const PROFILE = {
     "I combine business understanding with hands-on development in React, Java and C#/.NET.",
   about:
     "I graduated in Business Informatics at Alexandru Ioan Cuza University and I am now studying Project Management. I build my own projects in React, Java and C#/.NET, and I like understanding why a piece of software exists, not only how it works. I am looking for my first IT role where I can learn quickly and contribute to a team from the start.",
-  email: "your.email@example.com", // TODO: pune emailul tău
+  email: "andreeacrauciuc09@gmail.com", // TODO: pune emailul tău
   linkedin: "https://www.linkedin.com/in/your-profile", // TODO: linkul tău LinkedIn
   github: "https://github.com/andreeacrauciuc",
   cvUrl: "/cv.pdf", // pune fișierul în /public/cv.pdf
@@ -24,14 +24,14 @@ export const NAV = [
   ["work", "Work"],
   ["skills", "Skills"],
   ["contact", "Contact"],
-];
+] as const;
 
 export const FACTS = [
   ["8.80", "Bachelor's average"],
   ["9.75", "Final exam grade"],
   ["3", "Projects on GitHub"],
   ["2026", "Graduated, M.Sc. started"],
-];
+] as const;
 
 export const JOURNEY = [
   [
@@ -76,7 +76,7 @@ export const JOURNEY = [
     "Junior / entry-level IT roles",
     "Looking for my first role where I can learn fast and ship real work.",
   ],
-];
+] as const;
 
 // Lasă live: "" dacă proiectul nu are încă demo — butonul "Live preview" dispare automat.
 export const WORK = [
@@ -117,7 +117,7 @@ export const SKILLS = [
   ["Backend & data", "Java · C# · .NET · PostgreSQL"],
   ["Tools", "Git · GitHub · Jira · Figma"],
   ["Business", "Project management · Business analysis · Cybersecurity basics"],
-];
+] as const;
 
 export const MARQUEE = [
   "React",
@@ -130,4 +130,4 @@ export const MARQUEE = [
   "Jira",
   "Figma",
   "Cybersecurity",
-];
+] as const;

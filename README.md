@@ -13,13 +13,13 @@ Deschide linkul afișat în terminal (de obicei http://localhost:5173).
 
 ## Ce trebuie să înlocuiești
 
-| Ce | Unde |
-|---|---|
-| Poza ta | pune fișierul în `public/andreea.jpg` |
-| CV | pune fișierul în `public/cv.pdf` |
-| Email, LinkedIn, texte | `src/data/content.js` → `PROFILE` |
+| Ce                       | Unde                                                            |
+| ------------------------ | --------------------------------------------------------------- |
+| Poza ta                  | pune fișierul în `public/andreea.jpg`                           |
+| CV                       | pune fișierul în `public/cv.pdf`                                |
+| Email, LinkedIn, texte   | `src/data/content.js` → `PROFILE`                               |
 | Linkuri live la proiecte | `src/data/content.js` → `WORK` → `live` (gol = butonul dispare) |
-| Timeline, skills, cifre | `src/data/content.js` |
+| Timeline, skills, cifre  | `src/data/content.js`                                           |
 
 Tot conținutul e în `src/data/content.js`; designul e în `src/App.jsx`.
 
