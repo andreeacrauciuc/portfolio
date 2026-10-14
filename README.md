@@ -28,11 +28,11 @@ Personal portfolio for a Business Informatics graduate applying for a first IT r
 src/
   main.tsx            Entry point
   App.tsx             Page composition
-  data/               All site content, typed (profile, nav, facts, journey, projects, skills, technologies)
+  data/               Typed site content (profile, nav, certifications, journey, projects, skills, technologies)
   types/              Shared types for the content
   components/
-    ui/               Reusable building blocks (Marquee, ...)
-  hooks/              Custom hooks (useInView, ...)
+    ui/               Reusable building blocks (Marquee, CertificationCarousel)
+  hooks/              Custom hooks (useInView)
   lib/                Small helpers and constants (cn, constants)
   styles/             Sass tokens, mixins, keyframes and global base styles
 ```
@@ -51,18 +51,13 @@ Full conventions are in [CLAUDE.md](CLAUDE.md).
 
 ## Editing the content
 
-All text, links, projects and timeline entries live in `src/data/`. Replace the placeholders marked `TODO`:
+All text, links, projects, learning entries and timeline entries live in `src/data/`:
 
 | What                    | Where                                                               |
 | ----------------------- | ------------------------------------------------------------------- |
-| Photo                   | `public/andreea.jpg`                                                |
+| Photo                   | `src/assets/image00001.jpeg`                                        |
 | CV                      | `public/cv.pdf`                                                     |
-| Email, LinkedIn         | `src/data/profile.ts`                                               |
+| Email and social links  | `src/data/profile.ts`                                               |
 | Live links for projects | `src/data/projects.ts` (`liveUrl`; leave it out to hide the button) |
 | Marquee logos           | `src/data/technologies.ts` (one line per technology)                |
-
-## Deploying
-
-1. Push the repository to GitHub.
-2. On [vercel.com](https://vercel.com) choose **Add New → Project** and select the repository. Vercel detects Vite automatically (build command `npm run build`, output directory `dist`).
-3. Add the resulting URL to your CV and LinkedIn profile.
+| Courses and training    | `src/data/certifications.ts`                                        |

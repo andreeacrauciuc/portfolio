@@ -12,7 +12,6 @@ import {
 } from "react-icons/si";
 import type { Technology } from "@/types/content";
 
-// Shown as logos in the marquee strip. Add or remove a technology with one line.
 export const technologies: readonly Technology[] = [
   { name: "React", icon: SiReact, color: "#61dafb" },
   { name: "Java", icon: FaJava, color: "#ed8b00" },

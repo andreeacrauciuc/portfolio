@@ -69,3 +69,90 @@
     }
   }
 }
+
+@mixin fade-in {
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+// A hero letter rises from below its mask.
+@mixin letter-rise {
+  @keyframes letter-rise {
+    from {
+      transform: translateY(130%);
+    }
+
+    to {
+      transform: none;
+    }
+  }
+}
+
+// One-shot highlight crossing a glyph. The gradient is 300% wide, so moving its
+// position from 100% to 0% slides the bright band left to right.
+@mixin sweep {
+  @keyframes sweep {
+    from {
+      background-position: 100% 0;
+    }
+
+    to {
+      background-position: 0 0;
+    }
+  }
+}
+
+// Draws an SVG path whose pathLength is 1.
+@mixin draw {
+  @keyframes draw {
+    from {
+      stroke-dashoffset: 1;
+      opacity: 0;
+    }
+
+    2% {
+      opacity: 1;
+    }
+
+    to {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+  }
+}
+
+@mixin float {
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+}
+
+@mixin blink {
+  @keyframes blink {
+    0%,
+    45% {
+      opacity: 1;
+    }
+
+    55%,
+    100% {
+      opacity: 0;
+    }
+  }
+}

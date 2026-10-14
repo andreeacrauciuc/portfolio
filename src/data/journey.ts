@@ -2,54 +2,51 @@ import type { JourneyEntry } from "@/types/content";
 
 export const journey: readonly JourneyEntry[] = [
   {
-    id: "bsc-start",
-    period: "2023",
-    title: "Started B.Sc. Business Informatics",
-    place: "Alexandru Ioan Cuza University, Iași",
-    description: "Programming fundamentals, databases, C# and .NET, business analysis.",
+    id: "bsc",
+    period: "2023 — 2026",
+    title: "B.Sc. in Business Informatics",
+    place: "Alexandru Ioan Cuza University of Iași",
+    description:
+      "Built a strong foundation in business processes, databases, software design, and programming fundamentals in C#/.NET.",
   },
   {
-    id: "erasmus-crete",
-    period: "2025",
-    title: "Erasmus+ traineeship, Crete",
-    place: "Nana Golden Beach",
+    id: "independent-projects",
+    period: "2024 — 2026",
+    title: "Independent web and software projects",
+    place: "Personal portfolio and app experiments",
     description:
-      "Worked in an international team and learned to communicate clearly with customers and colleagues.",
+      "Developed practical projects in React and Java, focusing on user experience, interface clarity, and problem-solving through code.",
   },
   {
     id: "cyberedu",
-    period: "Feb – Mar 2026",
-    title: "CyberEDU Cybersecurity training",
-    place: "Web, network, social engineering, code",
-    description: "Completed the modules and solved hands-on security challenges.",
-  },
-  {
-    id: "bsc-graduation",
-    period: "2026",
-    title: "Graduated Business Informatics",
-    place: "UAIC Iași",
-    description: "Bachelor's average 8.80, final exam 9.75.",
+    period: "Feb — Mar 2026",
+    title: "CyberEDU cybersecurity training",
+    place: "Security fundamentals and hands-on practice",
+    description:
+      "Strengthened my understanding of digital security, online risk awareness, and structured problem solving in technical contexts.",
   },
   {
     id: "erasmus-supervisor",
-    period: "Jul – Sep 2026",
+    period: "Jul — Sep 2026",
     title: "Erasmus+ Supervisor",
     place: "Elinotel Apolamare, Halkidiki",
     description:
-      "Coordinated a team in peak season: responsibility, planning, working under pressure.",
+      "Worked in a fast-paced team environment, coordinating tasks, supporting operations, and communicating clearly under pressure.",
   },
   {
     id: "msc",
-    period: "2026 – 2028",
-    title: "M.Sc. Project Management",
-    place: "UAIC Iași",
-    description: "Studying how to plan, deliver and lead projects.",
+    period: "2026 — 2028",
+    title: "M.Sc. in Project Management",
+    place: "Alexandru Ioan Cuza University of Iași",
+    description:
+      "Deepening my understanding of planning, stakeholder communication, prioritization, and successful delivery of digital projects.",
   },
   {
     id: "open-to-work",
     period: "Now",
     title: "Open to work",
-    place: "Junior / entry-level IT roles",
-    description: "Looking for my first role where I can learn fast and ship real work.",
+    place: "Junior frontend, web, and project-support opportunities",
+    description:
+      "Looking for a role where I can contribute with technical skills, business awareness, and a strong desire to learn from a team.",
   },
 ];

@@ -11,7 +11,6 @@ export default defineConfig({
   },
   css: {
     preprocessorOptions: {
-      // Lets modules write `@use "tokens"` and `@use "mixins"`.
       scss: { loadPaths: [`${srcPath}/styles`] },
     },
   },

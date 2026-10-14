@@ -10,7 +10,7 @@ export interface Profile {
   email: string;
   linkedinUrl: string;
   githubUrl: string;
-  cvUrl: string;
+  cvUrl?: string;
   photoUrl: string;
 }
 
@@ -19,9 +19,14 @@ export interface NavItem {
   label: string;
 }
 
-export interface Fact {
-  value: string;
-  label: string;
+export interface Certification {
+  id: string;
+  title: string;
+  provider: string;
+  completedAt: string;
+  description: string;
+  verificationUrl?: string;
+  imageUrl?: string;
 }
 
 export interface JourneyEntry {
@@ -40,9 +45,8 @@ export interface Project {
   problem: string;
   built: string;
   learned: string;
-  /** Leave undefined while there is no demo: the "Live preview" button is hidden. */
   liveUrl?: string;
-  codeUrl: string;
+  codeUrl?: string;
 }
 
 export interface SkillGroup {
@@ -53,6 +57,5 @@ export interface SkillGroup {
 export interface Technology {
   name: string;
   icon: IconType;
-  /** Brand colour of the logo. Omit for icons without a brand (falls back to ink). */
   color?: string;
 }

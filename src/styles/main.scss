@@ -8,6 +8,5 @@
 @use "base";
 
 // Shared keyframes still referenced by name from outside CSS Modules.
-@include animations.rise;
 @include animations.pulse;
 @include animations.drift;

@@ -1,15 +1,16 @@
+import profilePhoto from "@/assets/image00001.jpeg";
 import type { Profile } from "@/types/content";
 
 export const profile: Profile = {
   name: "Andreea",
-  role: "Business Informatics graduate, aspiring IT professional",
+  role: "Business Informatics graduate • aspiring Frontend Developer",
   tagline:
-    "I combine business understanding with hands-on development in React, Java and C#/.NET.",
+    "I design and build clean digital experiences, turning business needs into practical, user-friendly solutions.",
   about:
-    "I graduated in Business Informatics at Alexandru Ioan Cuza University and I am now studying Project Management. I build my own projects in React, Java and C#/.NET, and I like understanding why a piece of software exists, not only how it works. I am looking for my first IT role where I can learn quickly and contribute to a team from the start.",
-  email: "your.email@example.com", // TODO: replace with your real email
-  linkedinUrl: "https://www.linkedin.com/in/your-profile", // TODO: replace with your LinkedIn URL
+    "I am a Business Informatics graduate with a strong interest in frontend development, digital product thinking, and project work. Through my studies and personal projects, I have built experience with React, Java, C#/.NET, and database-driven applications. I enjoy combining business context with technical implementation, and I am looking for a junior role where I can contribute, keep learning, and support a team in delivering meaningful digital solutions.",
+  email: "andreeacrauciuc09@gmail.com",
+  linkedinUrl: "https://www.linkedin.com/in/andreea-crauciuc-a676a2345",
   githubUrl: "https://github.com/andreeacrauciuc",
-  cvUrl: "/cv.pdf", // TODO: add your CV as public/cv.pdf
-  photoUrl: "/andreea.jpg", // TODO: add your photo as public/andreea.jpg
+  cvUrl: "/cv.pdf",
+  photoUrl: profilePhoto,
 };

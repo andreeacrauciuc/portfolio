@@ -6,9 +6,10 @@ import {
   type MouseEvent,
   type ReactNode,
 } from "react";
+import { CertificationCarousel } from "@/components/ui/CertificationCarousel/CertificationCarousel";
 import { Marquee } from "@/components/ui/Marquee/Marquee";
 import { useInView } from "@/hooks/useInView";
-import { facts } from "@/data/facts";
+import { certifications } from "@/data/certifications";
 import { journey } from "@/data/journey";
 import { navItems } from "@/data/nav";
 import { profile } from "@/data/profile";
@@ -41,6 +42,7 @@ function Reveal({ children, delay = 0 }: { children: ReactNode; delay?: number }
     <div
       ref={ref}
       style={{
+        minWidth: 0,
         opacity: isInView ? 1 : 0,
         transform: isInView ? "none" : "translateY(36px)",
         filter: isInView ? "none" : "blur(6px)",
@@ -63,6 +65,7 @@ function Label({ num, text }: { num: string; text: string }) {
 export function App() {
   const { name, role, tagline, about, email, linkedinUrl, githubUrl, cvUrl, photoUrl } =
     profile;
+  const hasCv = Boolean(cvUrl);
 
   const tlRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -106,7 +109,9 @@ export function App() {
       if (!raf) raf = requestAnimationFrame(update);
     };
     const measure = () => {
-      setMobile(window.innerWidth < 760);
+      // Keep the compact layout through tablet widths so the hero, cards, and
+      // navigation never compete for space or create horizontal overflow.
+      setMobile(window.innerWidth < 1100);
       setH(window.innerHeight);
       update();
     };
@@ -134,7 +139,7 @@ export function App() {
     setMouse({ x: e.clientX, y: e.clientY });
   };
 
-  const pad = mobile ? "90px 24px" : "130px 80px";
+  const pad = mobile ? "64px 24px" : "88px 80px";
   const yearW = mobile ? 0 : 150,
     lineX = mobile ? 8 : yearW + 24;
 
@@ -396,7 +401,7 @@ export function App() {
           style={{
             position: "relative",
             padding: mobile ? "130px 24px 90px" : "140px 80px 120px",
-            minHeight: mobile ? 0 : h,
+            minHeight: mobile ? 0 : Math.max(720, h - 48),
             display: "flex",
             flexDirection: mobile ? "column" : "row",
             alignItems: "center",
@@ -475,20 +480,22 @@ export function App() {
               >
                 View projects →
               </button>
-              <a
-                className="pill"
-                href={cvUrl}
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  ...glass,
-                  padding: "15px 30px",
-                  borderRadius: 999,
-                  fontWeight: 600,
-                }}
-              >
-                Download CV
-              </a>
+              {hasCv && (
+                <a
+                  className="pill"
+                  href={cvUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    ...glass,
+                    padding: "15px 30px",
+                    borderRadius: 999,
+                    fontWeight: 600,
+                  }}
+                >
+                  Download CV
+                </a>
+              )}
             </div>
           </div>
 
@@ -578,36 +585,17 @@ export function App() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: mobile ? "1fr" : "1.1fr 1fr",
-              gap: 40,
-              marginTop: 50,
+              gridTemplateColumns: mobile ? "1fr" : "1.05fr 0.95fr",
+              gap: mobile ? 38 : 48,
+              marginTop: 36,
             }}
           >
             <Reveal delay={0.1}>
               <p style={{ fontSize: 19, lineHeight: 1.8, opacity: 0.75 }}>{about}</p>
             </Reveal>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-              {facts.map(({ value, label }, i) => (
-                <Reveal key={label} delay={i * 0.08}>
-                  <div
-                    className="lift"
-                    style={{
-                      ...glass,
-                      borderRadius: 24,
-                      padding: "26px 22px",
-                      height: "100%",
-                    }}
-                  >
-                    <div style={{ ...serif, fontSize: 52, lineHeight: 1, color: ACC }}>
-                      {value}
-                    </div>
-                    <div style={{ ...mono, fontSize: 11, marginTop: 10, opacity: 0.6 }}>
-                      {label}
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
+            <Reveal delay={0.18}>
+              <CertificationCarousel items={certifications} />
+            </Reveal>
           </div>
         </section>
 
@@ -619,7 +607,7 @@ export function App() {
               The timeline.
             </h2>
           </Reveal>
-          <div ref={tlRef} style={{ position: "relative", marginTop: 60 }}>
+          <div ref={tlRef} style={{ position: "relative", marginTop: 42 }}>
             <div
               style={{
                 position: "absolute",
@@ -726,7 +714,7 @@ export function App() {
             </h2>
           </Reveal>
           <div
-            style={{ display: "flex", flexDirection: "column", gap: 24, marginTop: 56 }}
+            style={{ display: "flex", flexDirection: "column", gap: 20, marginTop: 40 }}
           >
             {projects.map((p, i) => (
               <Reveal key={p.id} delay={i * 0.08}>
@@ -815,21 +803,23 @@ export function App() {
                         Live preview ↗
                       </a>
                     )}
-                    <a
-                      className="pill"
-                      href={p.codeUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{
-                        border: "1.5px solid " + INK,
-                        padding: "10.5px 22px",
-                        borderRadius: 999,
-                        fontWeight: 600,
-                        fontSize: 14,
-                      }}
-                    >
-                      View code
-                    </a>
+                    {p.codeUrl && (
+                      <a
+                        className="pill"
+                        href={p.codeUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                          border: "1.5px solid " + INK,
+                          padding: "10.5px 22px",
+                          borderRadius: 999,
+                          fontWeight: 600,
+                          fontSize: 14,
+                        }}
+                      >
+                        View code
+                      </a>
+                    )}
                   </div>
                 </article>
               </Reveal>
@@ -850,7 +840,7 @@ export function App() {
               display: "grid",
               gridTemplateColumns: mobile ? "1fr" : "1fr 1fr",
               gap: 18,
-              marginTop: 50,
+              marginTop: 38,
             }}
           >
             {skills.map(({ category, items }, i) => (
@@ -930,20 +920,22 @@ export function App() {
               >
                 GitHub
               </a>
-              <a
-                className="pill"
-                href={cvUrl}
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  ...glass,
-                  padding: "14px 28px",
-                  borderRadius: 999,
-                  fontWeight: 600,
-                }}
-              >
-                CV
-              </a>
+              {hasCv && (
+                <a
+                  className="pill"
+                  href={cvUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    ...glass,
+                    padding: "14px 28px",
+                    borderRadius: 999,
+                    fontWeight: 600,
+                  }}
+                >
+                  CV
+                </a>
+              )}
             </div>
           </Reveal>
           <footer

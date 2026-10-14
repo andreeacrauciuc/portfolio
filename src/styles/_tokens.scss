@@ -2,8 +2,10 @@
 // module can `@use` it without duplicating output. The `custom-properties`
 // mixin exposes the tokens on :root once (see _base.scss).
 
-// Breakpoint. Keep in sync with BREAKPOINT_DESKTOP in src/lib/constants.ts.
+// Breakpoints (used by CSS only; scripts read layout through matchMedia queries).
 $breakpoint-desktop: 760px;
+// Wide enough for the hero's two-column layout (huge name next to the photo).
+$breakpoint-wide: 1024px;
 
 // Colour
 $color-ink: #14130f;

@@ -1,0 +1,143 @@
+@use "tokens" as t;
+@use "mixins" as m;
+
+.carousel {
+  width: 100%;
+  margin-left: auto;
+}
+
+.viewport {
+  overflow: hidden;
+  min-height: 300px;
+  border-radius: t.$radius-xl;
+  touch-action: pan-y;
+}
+
+.track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.55s t.$ease-out;
+}
+
+.slide {
+  min-width: 100%;
+  height: 100%;
+  padding: 2px;
+}
+
+.card {
+  @include m.glass-surface;
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border-radius: t.$radius-xl;
+  min-height: 300px;
+  padding: 30px;
+}
+
+.card::after {
+  position: absolute;
+  right: -24px;
+  bottom: -34px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: t.$color-blob-peach;
+  opacity: 0.45;
+  content: "";
+  filter: blur(24px);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+.date {
+  @include m.mono-label;
+  color: t.$color-accent;
+  font-size: 10px;
+}
+
+.title {
+  @include m.serif-heading;
+  margin-top: 22px;
+  max-width: 100%;
+  font-size: 29px;
+  line-height: 1.08;
+}
+
+.provider {
+  margin-top: 10px;
+  color: rgba(t.$color-ink, 0.62);
+  font-size: 13px;
+}
+
+.description {
+  max-width: 620px;
+  margin-top: 18px;
+  color: rgba(t.$color-ink, 0.75);
+  line-height: 1.55;
+}
+
+.controls {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+}
+
+.counter {
+  @include m.mono-label;
+  color: rgba(t.$color-ink, 0.55);
+  font-size: 10px;
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.button {
+  width: 36px;
+  height: 36px;
+  border: 1px solid t.$color-ink-outline;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.38);
+  font-size: 18px;
+  line-height: 1;
+  transition:
+    background-color t.$duration-quick,
+    color t.$duration-quick,
+    opacity t.$duration-quick,
+    transform t.$duration-quick;
+
+  &:hover:not(:disabled) {
+    background: t.$color-ink;
+    color: t.$color-paper;
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.35;
+  }
+}
+
+@include m.reduced-motion {
+  .track {
+    transition: none;
+  }
+}
+
+@include m.desktop {
+  .viewport,
+  .card {
+    min-height: 328px;
+  }
+}
